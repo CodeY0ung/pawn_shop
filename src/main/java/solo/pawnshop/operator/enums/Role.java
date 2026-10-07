@@ -1,4 +1,4 @@
-package solo.pawnshop.operator;
+package solo.pawnshop.operator.enums;
 
 public enum Role {
     OWNER,STAFF
