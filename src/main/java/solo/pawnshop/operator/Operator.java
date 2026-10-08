@@ -20,10 +20,10 @@ public class Operator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long operator_id;
+    private Long operatorId;
 
     // email
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     // password

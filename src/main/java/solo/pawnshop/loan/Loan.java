@@ -1,8 +1,6 @@
 package solo.pawnshop.loan;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +18,14 @@ import java.util.Date;
 public class Loan {
 
     @Id
-    private Long loan_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long loanId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "operator_id")
     private Operator operator;
 

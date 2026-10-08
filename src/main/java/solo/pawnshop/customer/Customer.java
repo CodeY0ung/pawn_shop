@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @Getter
 public class Customer {
     @Id
-    private Long customer_id;
+    private Long customerId;
     private String name;
     // 주민등록번호
-    private String resident_number;
+    private String residentNumber;
     private String phone;
 
 
