@@ -1,5 +1,6 @@
 package solo.pawnshop.Operator;
 
+import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,16 +10,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import solo.pawnshop.operator.Operator;
 import solo.pawnshop.operator.OperatorRepository;
 import solo.pawnshop.operator.OperatorService;
 import solo.pawnshop.operator.dto.CreateOperatorRequest;
 import solo.pawnshop.operator.enums.Gender;
 import solo.pawnshop.operator.enums.Role;
+import solo.pawnshop.operator.exception.DuplicatedEmailException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -28,7 +31,7 @@ public class OperatorServiceTest {
     OperatorRepository operatorRepository;
 
     @Mock
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    PasswordEncoder passwordEncoder;
 
     @InjectMocks
     OperatorService operatorService;
@@ -51,7 +54,7 @@ public class OperatorServiceTest {
                 .thenReturn(false);
 
 //      password 암호화 검사
-        when(bCryptPasswordEncoder.encode("password"))
+        when(passwordEncoder.encode("password"))
                 .thenReturn("encodedPassword");
 
         // when
@@ -64,7 +67,7 @@ public class OperatorServiceTest {
 
         verify(operatorRepository).save(captor.capture());
 
-        verify(bCryptPasswordEncoder).encode("password");
+        verify(passwordEncoder).encode("password");
 
         Operator savedOperator = captor.getValue();
 
@@ -89,8 +92,72 @@ public class OperatorServiceTest {
 
     @Test
     @DisplayName("사장 계정을 생성할 수 있다. Role = OWNER, active = true")
-    void createOwner(CreateOperatorRequest request){
+    void createOwner(){
         //given
+        CreateOperatorRequest request = CreateOperatorRequest.builder()
+                .email("owner@test")
+                .password("owner_password")
+                .name("owner")
+                .phoneNum("owner_phone")
+                .gender(Gender.MALE)
+                .resident_number("owner_resident_number")
+                .build();
 
+        when(operatorRepository.existsByEmail(request.email()))
+                .thenReturn(false);
+        when(passwordEncoder.encode(request.password()))
+                .thenReturn("owner_encoded_password");
+
+        //when
+        operatorService.createOwner(request);
+
+        //then
+        // 캡쳐 생성
+        ArgumentCaptor<Operator> captor =
+                ArgumentCaptor.forClass(Operator.class);
+
+        // save가 발동됐는지, 동시에 save에 들어갈 객체 capture
+        verify(operatorRepository).save(captor.capture());
+        // BCryptEncoder가 동작 했는지
+        verify(passwordEncoder).encode("owner_password");
+
+        Operator savedOwner = captor.getValue();
+
+        assertThat(savedOwner.getRole())
+                .isEqualTo(Role.OWNER);
+        assertThat(savedOwner.getPassword())
+                .isEqualTo("owner_encoded_password");
+        assertThat(savedOwner.isActive())
+                .isTrue();
+
+
+    }
+
+    @Test
+    @DisplayName("중복된 email로 계정을 생성할 수 없다.")
+    void cannotCreateOperatorByDuplicatedEmail(){
+        //given
+        CreateOperatorRequest request = CreateOperatorRequest.builder()
+                .email("owner@test")
+                .password("owner_password")
+                .name("owner")
+                .phoneNum("owner_phone")
+                .gender(Gender.MALE)
+                .resident_number("owner_resident_number")
+                .build();
+
+        when(operatorRepository.existsByEmail(request.email()))
+                .thenReturn(true);
+
+        //when && then
+        // email 중복 예외 터지는지
+        assertThatThrownBy(()->operatorService.createOwner(request))
+                .isInstanceOf(DuplicatedEmailException.class);
+
+        // passwordencoder 동작 안했는지
+        verify(passwordEncoder, never()).encode(anyString());
+
+        // save 동작 안했는지
+        verify(operatorRepository, never()).save(any(Operator.class));
     }
 }

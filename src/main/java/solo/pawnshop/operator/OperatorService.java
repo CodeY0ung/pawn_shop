@@ -41,9 +41,31 @@ public class OperatorService {
 
     }
 
+    @Transactional
+    public void createOwner(CreateOperatorRequest request){
+
+        // email 중복 검사
+        validateDuplicate(request.email());
+
+        // password encoding
+        String encodedPassword = passwordEncoder.encode(request.password());
+
+        Operator owner = Operator.builder()
+                .email(request.email())
+                .password(encodedPassword)
+                .name(request.name())
+                .role(Role.OWNER)
+                .phone(request.phoneNum())
+                .residentNumber(request.resident_number())
+                .gender(request.gender())
+                .build();
+        //save
+        operatorRepository.save(owner);
+    }
+
     public void validateDuplicate(String email){
         if(operatorRepository.existsByEmail(email)){
-            throw new DuplicatedEmailException("중복된 email");
+            throw new DuplicatedEmailException();
         }
     }
 }
