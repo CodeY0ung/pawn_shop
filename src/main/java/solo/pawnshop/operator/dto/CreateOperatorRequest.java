@@ -8,8 +8,8 @@ public record CreateOperatorRequest(
         String email,
         String password,
         String name,
-        String phoneNum,
-        String resident_number,
+        String phone,
+        String residentNumber,
         Gender gender
 ) {
 }

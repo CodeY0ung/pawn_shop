@@ -40,15 +40,15 @@ public class OperatorService {
                 .password(encodedPassword)
                 .name(request.name())
                 .role(role)
-                .phone(request.phoneNum())
-                .residentNumber(request.resident_number())
+                .phone(request.phone())
+                .residentNumber(request.residentNumber())
                 .gender(request.gender())
                 .build();
         //save
         operatorRepository.save(owner);
     }
 
-    public void validateDuplicate(String email){
+    private void validateDuplicate(String email){
         if(operatorRepository.existsByEmail(email)){
             throw new DuplicatedEmailException();
         }

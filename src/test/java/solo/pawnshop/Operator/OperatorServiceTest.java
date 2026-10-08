@@ -98,9 +98,9 @@ public class OperatorServiceTest {
                 .email("owner@test")
                 .password("owner_password")
                 .name("owner")
-                .phoneNum("owner_phone")
+                .phone("owner_phone")
                 .gender(Gender.MALE)
-                .resident_number("owner_resident_number")
+                .residentNumber("owner_resident_number")
                 .build();
 
         when(operatorRepository.existsByEmail(request.email()))
@@ -141,9 +141,9 @@ public class OperatorServiceTest {
                 .email("owner@test")
                 .password("owner_password")
                 .name("owner")
-                .phoneNum("owner_phone")
+                .phone("owner_phone")
                 .gender(Gender.MALE)
-                .resident_number("owner_resident_number")
+                .residentNumber("owner_resident_number")
                 .build();
 
         when(operatorRepository.existsByEmail(request.email()))
