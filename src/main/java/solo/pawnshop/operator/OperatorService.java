@@ -20,30 +20,15 @@ public class OperatorService {
 
     @Transactional
     public void createStaff(CreateOperatorRequest request){
-        // email 중복 검사
-        validateDuplicate(request.email());
-
-        // password encoding
-        String encodedPassword = passwordEncoder.encode(request.password());
-
-        Operator operator = Operator.builder()
-                .email(request.email())
-                .password(encodedPassword)
-                .name(request.name())
-                .phone(request.phoneNum())
-                .role(Role.STAFF)
-                .residentNumber(request.resident_number())
-                .gender(request.gender())
-                .build();
-
-        // save
-        operatorRepository.save(operator);
-
+        createOperator(request,Role.STAFF);
     }
 
     @Transactional
     public void createOwner(CreateOperatorRequest request){
+        createOperator(request, Role.OWNER);
+    }
 
+    private void createOperator(CreateOperatorRequest request, Role role){
         // email 중복 검사
         validateDuplicate(request.email());
 
@@ -54,7 +39,7 @@ public class OperatorService {
                 .email(request.email())
                 .password(encodedPassword)
                 .name(request.name())
-                .role(Role.OWNER)
+                .role(role)
                 .phone(request.phoneNum())
                 .residentNumber(request.resident_number())
                 .gender(request.gender())
