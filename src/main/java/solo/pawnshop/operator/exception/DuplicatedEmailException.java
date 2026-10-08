@@ -2,4 +2,12 @@ package solo.pawnshop.operator.exception;
 
 public class DuplicatedEmailException extends RuntimeException{
 
+    public DuplicatedEmailException(){
+        super();
+    }
+
+    public DuplicatedEmailException(String message){
+        super(message);
+    }
+
 }

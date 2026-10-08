@@ -34,7 +34,7 @@ public class OperatorServiceTest {
     OperatorService operatorService;
 
     @Test
-    @DisplayName("직원계정 생성시 Role.STAFF, active=true 로 저장된다.")
+    @DisplayName("직원계정을 생성할 수 있다. Role.STAFF, active=true")
     void createStaffSuccess(){
         // given
         CreateOperatorRequest request =
@@ -85,6 +85,12 @@ public class OperatorServiceTest {
         assertThat(savedOperator.isActive())
                 .isTrue();
 
+    }
+
+    @Test
+    @DisplayName("사장 계정을 생성할 수 있다. Role = OWNER, active = true")
+    void createOwner(CreateOperatorRequest request){
+        //given
 
     }
 }
