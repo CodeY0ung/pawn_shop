@@ -1,4 +1,4 @@
-package solo.pawnshop.operator;
+package solo.pawnshop.operator.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

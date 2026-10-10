@@ -5,11 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import solo.pawnshop.customer.Customer;
-import solo.pawnshop.operator.Operator;
+import solo.pawnshop.operator.domain.Operator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor

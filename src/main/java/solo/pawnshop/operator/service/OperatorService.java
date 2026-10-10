@@ -1,13 +1,14 @@
-package solo.pawnshop.operator;
+package solo.pawnshop.operator.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import solo.pawnshop.global.exception.UnSupportedException;
+import solo.pawnshop.operator.domain.Operator;
 import solo.pawnshop.operator.dto.CreateOperatorRequest;
 import solo.pawnshop.operator.enums.Role;
 import solo.pawnshop.operator.exception.DuplicatedEmailException;
+import solo.pawnshop.operator.repository.OperatorRepository;
 
 @Service
 @RequiredArgsConstructor

@@ -1,13 +1,12 @@
 package solo.pawnshop.Operator;
 
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import solo.pawnshop.operator.Operator;
-import solo.pawnshop.operator.OperatorRepository;
+import solo.pawnshop.operator.domain.Operator;
+import solo.pawnshop.operator.repository.OperatorRepository;
 import solo.pawnshop.operator.enums.Gender;
 import solo.pawnshop.operator.enums.Role;
 

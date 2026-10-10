@@ -1,19 +1,16 @@
 package solo.pawnshop.Operator;
 
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import solo.pawnshop.operator.Operator;
-import solo.pawnshop.operator.OperatorRepository;
-import solo.pawnshop.operator.OperatorService;
+import solo.pawnshop.operator.domain.Operator;
+import solo.pawnshop.operator.repository.OperatorRepository;
+import solo.pawnshop.operator.service.OperatorService;
 import solo.pawnshop.operator.dto.CreateOperatorRequest;
 import solo.pawnshop.operator.enums.Gender;
 import solo.pawnshop.operator.enums.Role;
