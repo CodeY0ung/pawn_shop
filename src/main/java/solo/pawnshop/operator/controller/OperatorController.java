@@ -30,4 +30,15 @@ public class OperatorController {
                 .build();
     }
 
+    @PostMapping("/owner")
+    public ResponseEntity<Void> createOwner(
+            @RequestBody CreateOperatorRequest request
+    ){
+        operatorService.createOwner(request);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .build();
+    }
+
 }

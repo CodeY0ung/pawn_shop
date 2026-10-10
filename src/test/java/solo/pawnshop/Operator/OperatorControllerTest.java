@@ -1,5 +1,6 @@
 package solo.pawnshop.Operator;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -26,12 +27,13 @@ public class OperatorControllerTest {
     OperatorService operatorService;
 
     @Test
+    @DisplayName("직원을 생성할 수 있다.")
     void createStaff() throws Exception{
 
         String json = """
                 {
                     "email" : "test@email",
-                    "password : "password",
+                    "password" : "password",
                     "name" : "name",
                     "phone" : "phone",
                     "residentNumber" : "residentNumber",
@@ -48,6 +50,30 @@ public class OperatorControllerTest {
 
         // 검증
         verify(operatorService).createStaff(any(CreateOperatorRequest.class));
+    }
+
+    @Test
+    @DisplayName("사장을 생성할 수 있다.")
+    void createOwner() throws Exception{
+        String json = """
+                {
+                    "email" : "owner@email",
+                    "password" : "password",
+                    "name" : "name",
+                    "phone" : "phone",
+                    "residentNumber" : "residentNumber",
+                    "gender" : "MALE"
+                }
+                """;
+
+        mockMvc.perform(
+                post("/api/operators/owner")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        ).andExpect(status().isCreated());
+
+        verify(operatorService).createOwner(any(CreateOperatorRequest.class));
+
     }
 
 }
