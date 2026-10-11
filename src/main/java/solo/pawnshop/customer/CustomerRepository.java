@@ -10,4 +10,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 
     public boolean existByNameAndPhoneAndBirthDate(String name, String phone, LocalDate birthDate);
+
 }

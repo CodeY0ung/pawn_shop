@@ -10,6 +10,7 @@ import solo.pawnshop.customer.embeddable.Address;
 import solo.pawnshop.customer.exception.DuplicatedCustomerException;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +42,12 @@ public class CustomerService {
 
         customerRepository.save(customer);
     }
+
+    public List<Customer> findAll(){
+        return customerRepository.findAll();
+    }
+
+
 
     private void validate(String name, String phone, LocalDate birthDate){
         if(customerRepository.existByNameAndPhoneAndBirthDate(name, phone, birthDate)){
