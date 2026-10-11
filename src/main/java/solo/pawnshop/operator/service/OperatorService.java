@@ -19,11 +19,13 @@ public class OperatorService {
     private final PasswordEncoder passwordEncoder;
 
 
+    // 직원 생성
     @Transactional
     public void createStaff(CreateOperatorRequest request){
         createOperator(request,Role.STAFF);
     }
 
+    // 사장 생성
     @Transactional
     public void createOwner(CreateOperatorRequest request){
         createOperator(request, Role.OWNER);
@@ -53,5 +55,15 @@ public class OperatorService {
         if(operatorRepository.existsByEmail(email)){
             throw new DuplicatedEmailException();
         }
+    }
+
+    // 직원 전체 조회
+    public void findStaffAll(){
+        operatorRepository.findAll();
+    }
+
+    // id로 조회
+    public void findStaffById(Long id){
+        operatorRepository.findById(id);
     }
 }
