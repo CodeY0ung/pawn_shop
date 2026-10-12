@@ -1,6 +1,5 @@
-package solo.pawnshop.customer.dto;
+package solo.pawnshop.customer.dto.response;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import solo.pawnshop.customer.Customer;
 

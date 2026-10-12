@@ -1,15 +1,13 @@
 package solo.pawnshop.customer;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import solo.pawnshop.customer.dto.CreateCustomerRequest;
-import solo.pawnshop.customer.dto.CustomerInfoResponse;
+import solo.pawnshop.customer.dto.request.CreateCustomerRequest;
+import solo.pawnshop.customer.dto.response.CustomerInfoResponse;
 
 import java.util.List;
-import java.util.concurrent.CompletionService;
 
 @RestController
 @RequiredArgsConstructor

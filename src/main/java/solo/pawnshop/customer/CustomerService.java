@@ -1,21 +1,16 @@
 package solo.pawnshop.customer;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import solo.pawnshop.customer.dto.AddressResponse;
-import solo.pawnshop.customer.dto.CreateCustomerRequest;
-import solo.pawnshop.customer.dto.CustomerInfoResponse;
+import solo.pawnshop.customer.dto.request.CreateCustomerRequest;
+import solo.pawnshop.customer.dto.response.CustomerInfoResponse;
 import solo.pawnshop.customer.embeddable.Address;
 import solo.pawnshop.customer.exception.CustomerNotFoundException;
 import solo.pawnshop.customer.exception.DuplicatedCustomerException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

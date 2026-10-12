@@ -7,8 +7,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import solo.pawnshop.customer.dto.AddressRequest;
-import solo.pawnshop.customer.dto.CreateCustomerRequest;
+import solo.pawnshop.customer.dto.request.AddressRequest;
+import solo.pawnshop.customer.dto.request.CreateCustomerRequest;
 import solo.pawnshop.customer.exception.DuplicatedCustomerException;
 
 import java.time.LocalDate;
@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.internal.configuration.GlobalConfiguration.validate;
 
 @ExtendWith(MockitoExtension.class)
 public class customerServiceTest {
