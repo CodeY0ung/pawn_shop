@@ -58,8 +58,10 @@ public class CustomerService {
     // id로 조회
     public CustomerInfoResponse findById(Long id){
 
-        return CustomerInfoResponse.from(customerRepository.findById(id)
-                .orElseThrow(()->new CustomerNotFoundException()));
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(CustomerNotFoundException::new);
+
+        return CustomerInfoResponse.from(customer);
     }
 
 
