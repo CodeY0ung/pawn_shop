@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import solo.pawnshop.customer.dto.request.CreateCustomerRequest;
+import solo.pawnshop.customer.dto.request.CustomerSearchConditions;
 import solo.pawnshop.customer.dto.response.CustomerInfoResponse;
 import solo.pawnshop.customer.embeddable.Address;
 import solo.pawnshop.customer.exception.CustomerNotFoundException;
@@ -62,6 +63,28 @@ public class CustomerService {
                 .orElseThrow(CustomerNotFoundException::new);
 
         return CustomerInfoResponse.from(customer);
+    }
+
+    // 조건들로 조회
+    public List<CustomerInfoResponse> findByConditions(CustomerSearchConditions conditions){
+        String name = normalizeBlank(conditions.name());
+        String phone = normalizeBlank(conditions.phone());
+
+        if(phone != null){
+            phone = normalizePhone(phone);
+        }
+
+        return customerRepository.searchCustomers(name, phone, conditions.birth_date())
+                .stream()
+                .map(CustomerInfoResponse::from)
+                .toList();
+    }
+
+    private String normalizeBlank(String value){
+        if(value == null || value.isBlank()){
+            return null;
+        }
+        return value.trim();
     }
 
 

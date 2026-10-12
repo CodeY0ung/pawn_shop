@@ -1,10 +1,12 @@
 package solo.pawnshop.customer;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import solo.pawnshop.customer.dto.request.CreateCustomerRequest;
+import solo.pawnshop.customer.dto.request.CustomerSearchConditions;
 import solo.pawnshop.customer.dto.response.CustomerInfoResponse;
 
 import java.util.List;
@@ -36,11 +38,20 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerInfoResponse> findById(
-            @PathVariable Long id
+           @PathVariable Long id
     ){
         CustomerInfoResponse customer = customerService.findById(id);
 
         return ResponseEntity.ok(customer);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<CustomerInfoResponse>> findByConditions(
+            @ModelAttribute CustomerSearchConditions conditions
+    ){
+        List<CustomerInfoResponse> customers = customerService.findByConditions(conditions);
+
+        return ResponseEntity.ok(customers);
     }
 
 }
