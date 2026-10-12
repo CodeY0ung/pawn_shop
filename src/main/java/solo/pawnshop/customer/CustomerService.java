@@ -5,12 +5,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import solo.pawnshop.customer.dto.AddressResponse;
 import solo.pawnshop.customer.dto.CreateCustomerRequest;
+import solo.pawnshop.customer.dto.CustomerInfoResponse;
 import solo.pawnshop.customer.embeddable.Address;
+import solo.pawnshop.customer.exception.CustomerNotFoundException;
 import solo.pawnshop.customer.exception.DuplicatedCustomerException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,9 +48,25 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public List<Customer> findAll(){
-        return customerRepository.findAll();
+    // 전체 회원 조회
+    public List<CustomerInfoResponse> findAll(){
+
+        // stream으로 list안에 담긴 customer를 하나씩 흘려보낸다.
+        // map으로 customerInfoResponse형태로 변환.
+        // list형태로 만들어라.
+        return customerRepository.findAll()
+                .stream()
+                .map(CustomerInfoResponse::from)
+                .toList();
     }
+
+    // id로 조회
+    public CustomerInfoResponse findById(Long id){
+
+        return CustomerInfoResponse.from(customerRepository.findById(id)
+                .orElseThrow(()->new CustomerNotFoundException()));
+    }
+
 
 
 

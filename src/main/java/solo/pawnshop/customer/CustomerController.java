@@ -3,11 +3,11 @@ package solo.pawnshop.customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import solo.pawnshop.customer.dto.CreateCustomerRequest;
+import solo.pawnshop.customer.dto.CustomerInfoResponse;
 
+import java.util.List;
 import java.util.concurrent.CompletionService;
 
 @RestController
@@ -18,7 +18,8 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping()
-    public ResponseEntity<Void> createCustomer(CreateCustomerRequest request){
+    public ResponseEntity<Void> createCustomer(
+            @RequestBody CreateCustomerRequest request){
 
         customerService.createCustomer(request);
 
@@ -26,5 +27,14 @@ public class CustomerController {
                 .status(HttpStatus.CREATED)
                 .build();
     }
+
+    @GetMapping()
+    public ResponseEntity<List<CustomerInfoResponse>> findAll(
+    ){
+        List<CustomerInfoResponse> customers = customerService.findAll();
+        return ResponseEntity.ok(customers);
+    }
+
+
 
 }
