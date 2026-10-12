@@ -1,6 +1,7 @@
 package solo.pawnshop.customer;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,13 @@ public class CustomerController {
         return ResponseEntity.ok(customers);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomerInfoResponse> findById(
+            @PathVariable Long id
+    ){
+        CustomerInfoResponse customer = customerService.findById(id);
 
+        return ResponseEntity.ok(customer);
+    }
 
 }
