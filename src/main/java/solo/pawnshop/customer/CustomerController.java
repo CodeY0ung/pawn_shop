@@ -1,6 +1,7 @@
 package solo.pawnshop.customer;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerInfoResponse> findById(
-           @PathVariable Long id
+           @Positive @PathVariable Long id
     ){
         CustomerInfoResponse customer = customerService.findById(id);
 
@@ -53,5 +54,7 @@ public class CustomerController {
 
         return ResponseEntity.ok(customers);
     }
+
+
 
 }
