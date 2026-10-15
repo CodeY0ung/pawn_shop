@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import solo.pawnshop.customer.Customer;
 import solo.pawnshop.operator.domain.Operator;
 
@@ -32,14 +33,15 @@ public class Loan {
     private Long principal;
     // 연 금리
     private int annualInterestRate;
-    // 상환방식
-    private PaymentType paymentType;
     // 계약일
     private LocalDate contractDate;
-    // 만기일
-    private LocalDate maturityDate;
+    // 최초 만기일
+    private LocalDate initialMaturityDate;
+    // 현재 만기일
+    private LocalDate currentMaturityDate;
     // 계약 상태
     private Status status;
     // 데이터 생성 시간
     private LocalDateTime createdAt;
+
 }
