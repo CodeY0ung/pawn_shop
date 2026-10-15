@@ -28,23 +28,18 @@ public class Loan {
     @JoinColumn(name = "operator_id")
     private Operator operator;
 
-    private int principal;
-
-    //정상 약정 금리
-    private int interestRatePpm;
-
-    private int defaultRatePpm;
-
+    // 원금
+    private Long principal;
+    // 연 금리
+    private int annualInterestRate;
+    // 상환방식
     private PaymentType paymentType;
-
+    // 계약일
     private LocalDate contractDate;
-
-    private LocalDate originalMaturityDate;
-
-    private LocalDate currentMaturityDate;
-
+    // 만기일
+    private LocalDate maturityDate;
+    // 계약 상태
     private Status status;
-
+    // 데이터 생성 시간
     private LocalDateTime createdAt;
-
 }
