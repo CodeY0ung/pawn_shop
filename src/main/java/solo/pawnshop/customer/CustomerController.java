@@ -57,6 +57,7 @@ public class CustomerController {
         return ResponseEntity.ok(customers);
     }
 
+    // 회원 정보 수정
     @PutMapping("/{id}")
     public ResponseEntity<CustomerInfoResponse> updateCustomerById(
             @PathVariable Long id,
@@ -66,6 +67,17 @@ public class CustomerController {
 
         return ResponseEntity.ok(response);
     }
+
+    // 회원 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomerById(
+            @PathVariable Long id
+    ){
+        customerService.deleteCustomerById(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }

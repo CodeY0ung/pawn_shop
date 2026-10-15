@@ -23,17 +23,15 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query("""
     select c
     from Customer c
-    where (:name is null
-           or c.name like concat('%', :name, '%'))
-      and (:phone is null
-           or c.phone = :phone)
-      and (:birthDate is null
-           or c.birthDate = :birthDate)
+    where c.deleted = false
+      and (:name is null or c.name like concat('%', :name, '%'))
+      and (:phone is null or c.phone = :phone)
+      and (:birthDate is null or c.birthDate = :birthDate)
     """)
     List<Customer> searchCustomers(
-            @Param("name") String name,
-            @Param("phone") String phone,
-            @Param("birthDate") LocalDate birthDate
+            String name,
+            String phone,
+            LocalDate birthDate
     );
 
 }

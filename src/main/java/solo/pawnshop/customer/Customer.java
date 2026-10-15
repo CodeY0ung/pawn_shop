@@ -29,6 +29,11 @@ public class Customer {
     @Column(nullable = false)
     private LocalDate birthDate;
 
+    @Column(nullable = false)
+    private boolean deleted;
+
+    private LocalDateTime deletedAt;
+
     @Builder
     private Customer(String name, String phone,
                      Address address, LocalDate birthDate) {
@@ -36,6 +41,7 @@ public class Customer {
         this.phone = phone;
         this.address = address;
         this.birthDate = birthDate;
+        this.deleted = false;
     }
 
     public void changeName(String name){
@@ -49,6 +55,14 @@ public class Customer {
     }
     public void changeBirthDate(LocalDate birthDate){
         this.birthDate = birthDate;
+    }
+    public void delete(){
+        this.deleted = true;
+        deletedAt = LocalDateTime.now();
+    }
+    public void restore(){
+        this.deleted = false;
+        deletedAt = null;
     }
 
 }

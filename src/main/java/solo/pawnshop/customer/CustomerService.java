@@ -108,7 +108,23 @@ public class CustomerService {
         customer.changeAddress(address);
 
         return CustomerInfoResponse.from(customer);
+    }
 
+    // 고객 삭제
+    public void deleteCustomerById(Long id){
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow();
+
+        customer.delete();
+        // 영속성 컨텍스트 때문에 save 필요없음.
+    }
+
+    // 고객 복구
+    public void restoreCustomerById(Long id){
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow();
+
+        customer.restore();
     }
 
     private String normalizeBlank(String value){
