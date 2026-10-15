@@ -120,11 +120,11 @@ public class CustomerService {
     }
 
     // 고객 복구
-    public void restoreCustomerById(Long id){
+    public CustomerInfoResponse restoreCustomerById(Long id){
         Customer customer = customerRepository.findById(id)
                 .orElseThrow();
-
         customer.restore();
+        return CustomerInfoResponse.from(customer);
     }
 
     private String normalizeBlank(String value){

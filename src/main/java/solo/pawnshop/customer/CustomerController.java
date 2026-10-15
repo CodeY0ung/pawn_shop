@@ -44,7 +44,6 @@ public class CustomerController {
            @Positive @PathVariable Long id
     ){
         CustomerInfoResponse customer = customerService.findById(id);
-
         return ResponseEntity.ok(customer);
     }
 
@@ -53,7 +52,6 @@ public class CustomerController {
             @ModelAttribute CustomerSearchConditions conditions
     ){
         List<CustomerInfoResponse> customers = customerService.findByConditions(conditions);
-
         return ResponseEntity.ok(customers);
     }
 
@@ -64,7 +62,6 @@ public class CustomerController {
             @Valid @RequestBody UpdateCustomerRequest request
             ){
         CustomerInfoResponse response = customerService.updateCustomer(id, request);
-
         return ResponseEntity.ok(response);
     }
 
@@ -74,10 +71,16 @@ public class CustomerController {
             @PathVariable Long id
     ){
         customerService.deleteCustomerById(id);
-
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/{id}/restore")
+    public ResponseEntity<CustomerInfoResponse> restoreCustomer(
+            @PathVariable Long id){
+        CustomerInfoResponse response
+                = customerService.restoreCustomerById(id);
+        return ResponseEntity.ok(response);
+    }
 
 
 }
