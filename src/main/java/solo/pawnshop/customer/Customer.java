@@ -37,4 +37,18 @@ public class Customer {
         this.address = address;
         this.birthDate = birthDate;
     }
+
+    public void changeName(String name){
+        this.name = name;
+    }
+    public void changePhone(String phone){
+        this.phone = phone;
+    }
+    public void changeAddress(Address address){
+        this.address = address;
+    }
+    public void changeBirthDate(LocalDate birthDate){
+        this.birthDate = birthDate;
+    }
+
 }

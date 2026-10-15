@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import solo.pawnshop.customer.dto.request.CreateCustomerRequest;
 import solo.pawnshop.customer.dto.request.CustomerSearchConditions;
+import solo.pawnshop.customer.dto.request.UpdateCustomerRequest;
 import solo.pawnshop.customer.dto.response.CustomerInfoResponse;
 import solo.pawnshop.customer.embeddable.Address;
 import solo.pawnshop.customer.exception.CustomerNotFoundException;
@@ -78,6 +79,36 @@ public class CustomerService {
                 .stream()
                 .map(CustomerInfoResponse::from)
                 .toList();
+    }
+
+    // 고객 정보 수정
+    public CustomerInfoResponse updateCustomer(Long id, UpdateCustomerRequest request){
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(CustomerNotFoundException::new);
+
+        // 중복체크
+        boolean duplicated = customerRepository
+                .existsByNameAndPhoneAndBirthDateAndCustomerIdNot(
+                        request.name(), request.phone(), request.birthDate(), id
+                );
+
+        if(duplicated){
+            throw new CustomerNotFoundException();
+        }
+
+        Address address = Address.builder()
+                .zipCode(request.address().zipCode())
+                .roadAddress(request.address().roadAddress())
+                .detailAddress(request.address().detailAddress())
+                .build();
+
+        customer.changeName(request.name());
+        customer.changePhone(normalizePhone(request.phone()));
+        customer.changeBirthDate(request.birthDate());
+        customer.changeAddress(address);
+
+        return CustomerInfoResponse.from(customer);
+
     }
 
     private String normalizeBlank(String value){

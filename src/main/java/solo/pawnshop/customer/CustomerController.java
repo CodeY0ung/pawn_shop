@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import solo.pawnshop.customer.dto.request.CreateCustomerRequest;
 import solo.pawnshop.customer.dto.request.CustomerSearchConditions;
+import solo.pawnshop.customer.dto.request.UpdateCustomerRequest;
 import solo.pawnshop.customer.dto.response.CustomerInfoResponse;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -55,6 +57,15 @@ public class CustomerController {
         return ResponseEntity.ok(customers);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerInfoResponse> updateCustomerById(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateCustomerRequest request
+            ){
+        CustomerInfoResponse response = customerService.updateCustomer(id, request);
+
+        return ResponseEntity.ok(response);
+    }
 
 
 }

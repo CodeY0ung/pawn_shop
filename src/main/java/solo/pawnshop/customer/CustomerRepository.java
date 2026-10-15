@@ -12,8 +12,13 @@ import java.util.List;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 
-    public boolean existByNameAndPhoneAndBirthDate(String name, String phone, LocalDate birthDate);
-
+    boolean existByNameAndPhoneAndBirthDate(String name, String phone, LocalDate birthDate);
+    boolean existsByNameAndPhoneAndBirthDateAndCustomerIdNot(
+            String name,
+            String phone,
+            LocalDate birthDate,
+            Long id
+            );
 
     @Query("""
     select c
