@@ -25,10 +25,6 @@ public class Loan {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "operator_id")
-    private Operator operator;
-
     // 원금
     private Long principal;
     // 연 금리
@@ -43,5 +39,7 @@ public class Loan {
     private Status status;
     // 데이터 생성 시간
     private LocalDateTime createdAt;
+
+
 
 }
