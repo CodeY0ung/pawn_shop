@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import solo.pawnshop.loan.dto.CreateLoanRequest;
 import solo.pawnshop.loan.dto.LoanInfoResponse;
+import solo.pawnshop.loan.dto.UpdateLoanRequest;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class LoanController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/loan/{id}")
+    @GetMapping("/loans/{id}")
     public ResponseEntity<LoanInfoResponse> findLoanById(
             @PathVariable Long id
     ){
@@ -39,8 +40,15 @@ public class LoanController {
     }
 
     @GetMapping("/loans")
-    public ResponseEntity<List<LoanInfoResponse>> findloans(){
+    public ResponseEntity<List<LoanInfoResponse>> findLoans(){
         return ResponseEntity.ok(loanService.findAll());
+    }
+
+    @PatchMapping("/loans/{id}")
+    public ResponseEntity<Void> updateLoan(
+            @PathVariable Long id, @Valid @RequestBody UpdateLoanRequest request
+            ){
+        return ResponseEntity.noContent().build();
     }
 
 }

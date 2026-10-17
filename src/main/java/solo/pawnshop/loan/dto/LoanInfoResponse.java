@@ -3,13 +3,11 @@ package solo.pawnshop.loan.dto;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;
-import org.hibernate.annotations.CreationTimestamp;
 import solo.pawnshop.loan.Loan;
-import solo.pawnshop.loan.Status;
+import solo.pawnshop.loan.LoanStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Builder
 public record LoanInfoResponse(
@@ -30,7 +28,7 @@ public record LoanInfoResponse(
 
         // 계약 상태
         @Enumerated(EnumType.STRING)
-        Status status
+        LoanStatus status
 
 ) {
     public static LoanInfoResponse from(Loan loan){

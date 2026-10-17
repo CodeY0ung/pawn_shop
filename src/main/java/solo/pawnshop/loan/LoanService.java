@@ -11,6 +11,7 @@ import solo.pawnshop.customer.exception.LoanNotFoundException;
 import solo.pawnshop.global.InterestCalculator;
 import solo.pawnshop.loan.dto.CreateLoanRequest;
 import solo.pawnshop.loan.dto.LoanInfoResponse;
+import solo.pawnshop.loan.dto.UpdateLoanRequest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -67,5 +68,13 @@ public class LoanService {
                 .stream()
                 .map(LoanInfoResponse::from)
                 .toList();
+    }
+
+    public void updateLoan(Long id, UpdateLoanRequest request){
+        Loan loan = loanRepository.findById(id)
+                .orElseThrow(LoanNotFoundException::new);
+
+        loan.changeCurrentMaturity(request.changedMaturity());
+        loan.ChangeLoanStatus(request.status());
     }
 }

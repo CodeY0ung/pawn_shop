@@ -1,5 +1,5 @@
 package solo.pawnshop.loan;
 
-public enum Status {
+public enum LoanStatus {
     ACTIVE,REPAID,CLOSED
 }
