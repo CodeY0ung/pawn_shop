@@ -8,28 +8,39 @@ import org.springframework.web.bind.annotation.*;
 import solo.pawnshop.loan.dto.CreateLoanRequest;
 import solo.pawnshop.loan.dto.LoanInfoResponse;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/loan/")
+@RequestMapping("/api/customers")
 public class LoanController {
     private final LoanService loanService;
 
-    @PostMapping("/customer/{customerId}")
+    @PostMapping("/{customerId}/loan")
     public ResponseEntity<Void> createLoan(
-            @PathVariable Long customerId, @Valid @RequestBody CreateLoanRequest request){
+            @PathVariable Long customerId,
+            @Valid @RequestBody CreateLoanRequest request){
         loanService.createLoan(customerId,request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/loan/{id}")
     public ResponseEntity<LoanInfoResponse> findLoanById(
             @PathVariable Long id
     ){
-        LoanInfoResponse response
-                = loanService.findLoanById(id);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(loanService.findLoanById(id));
     }
 
+    @GetMapping("/{customerId}/loans")
+    public ResponseEntity<List<LoanInfoResponse>> findLoansByCustomerId(
+            @PathVariable Long customerId
+    ){
+        return ResponseEntity.ok(loanService.findLoansByCustomerId(customerId));
+    }
 
+    @GetMapping("/loans")
+    public ResponseEntity<List<LoanInfoResponse>> findloans(){
+        return ResponseEntity.ok(loanService.findAll());
+    }
 
 }

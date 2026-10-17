@@ -14,6 +14,8 @@ import solo.pawnshop.loan.dto.LoanInfoResponse;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -51,5 +53,19 @@ public class LoanService {
                 .build();
 
         return response;
+    }
+
+    public List<LoanInfoResponse> findLoansByCustomerId(Long customerId){
+        return loanRepository.findAllByCustomer_CustomerId(customerId)
+                .stream()
+                .map(LoanInfoResponse::from)
+                .toList();
+    }
+
+    public List<LoanInfoResponse> findAll(){
+        return loanRepository.findAll()
+                .stream()
+                .map(LoanInfoResponse::from)
+                .toList();
     }
 }
