@@ -48,6 +48,7 @@ public class LoanController {
     public ResponseEntity<Void> updateLoan(
             @PathVariable Long id, @Valid @RequestBody UpdateLoanRequest request
             ){
+        loanService.updateLoan(id, request);
         return ResponseEntity.noContent().build();
     }
 

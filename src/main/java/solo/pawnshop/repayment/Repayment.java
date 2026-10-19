@@ -24,4 +24,13 @@ public class Repayment {
     private Long repaidAmount;
     // 상환 날짜
     private LocalDate repaidDate;
+    // 상환 상태
+    private boolean isRepayment;
+    // 상환 확인 날짜
+    private LocalDate createdAt;
+
+    private Repayment(Long repaidAmount){
+
+
+    }
 }

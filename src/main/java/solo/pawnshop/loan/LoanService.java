@@ -5,17 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import solo.pawnshop.customer.Customer;
 import solo.pawnshop.customer.CustomerRepository;
-import solo.pawnshop.customer.CustomerService;
 import solo.pawnshop.customer.exception.CustomerNotFoundException;
 import solo.pawnshop.customer.exception.LoanNotFoundException;
-import solo.pawnshop.global.InterestCalculator;
 import solo.pawnshop.loan.dto.CreateLoanRequest;
 import solo.pawnshop.loan.dto.LoanInfoResponse;
 import solo.pawnshop.loan.dto.UpdateLoanRequest;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +21,7 @@ public class LoanService {
     private final CustomerRepository customerRepository;
 
 
+    @Transactional
     public void createLoan(Long customerId, CreateLoanRequest request){
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(CustomerNotFoundException::new);
@@ -70,6 +66,7 @@ public class LoanService {
                 .toList();
     }
 
+    @Transactional
     public void updateLoan(Long id, UpdateLoanRequest request){
         Loan loan = loanRepository.findById(id)
                 .orElseThrow(LoanNotFoundException::new);
