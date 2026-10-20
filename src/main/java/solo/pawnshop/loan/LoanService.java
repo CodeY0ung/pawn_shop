@@ -7,6 +7,9 @@ import solo.pawnshop.customer.Customer;
 import solo.pawnshop.customer.CustomerRepository;
 import solo.pawnshop.customer.exception.CustomerNotFoundException;
 import solo.pawnshop.customer.exception.LoanNotFoundException;
+import solo.pawnshop.interestSchedule.InterestSchedule;
+import solo.pawnshop.interestSchedule.InterestScheduleRepository;
+import solo.pawnshop.loan.calculator.InterestCalculator;
 import solo.pawnshop.loan.dto.CreateLoanRequest;
 import solo.pawnshop.loan.dto.LoanInfoResponse;
 import solo.pawnshop.loan.dto.UpdateLoanRequest;
@@ -19,6 +22,8 @@ import java.util.List;
 public class LoanService {
     private final LoanRepository loanRepository;
     private final CustomerRepository customerRepository;
+    private final InterestCalculator interestCalculator;
+    private final InterestScheduleRepository interestScheduleRepository;
 
 
     @Transactional
@@ -34,6 +39,11 @@ public class LoanService {
                 .contractDate(request.contractDate())
                 .build();
         loanRepository.save(loan);
+
+
+
+        InterestSchedule interestSchedule = InterestSchedule.builder()
+                .build();
     }
 
     public LoanInfoResponse findLoanById(Long id){
