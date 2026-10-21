@@ -14,6 +14,7 @@ import solo.pawnshop.loan.dto.CreateLoanRequest;
 import solo.pawnshop.loan.dto.LoanInfoResponse;
 import solo.pawnshop.loan.dto.UpdateLoanRequest;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -40,10 +41,21 @@ public class LoanService {
                 .build();
         loanRepository.save(loan);
 
+        // 이자 계산
+        LocalDate periodStart = loan.getContractDate();
+        LocalDate periodEnd = loan.getInitialMaturityDate();
+        long interest = interestCalculator.calculate(loan.getPrincipal(), periodStart, periodEnd);
 
-
+        // 스케줄 생성
         InterestSchedule interestSchedule = InterestSchedule.builder()
+                .loan(loan)
+                .periodStart(periodStart)
+                .periodEnd(periodEnd)
+                .dueDate(periodEnd)
+                .amountDue(interest)
                 .build();
+
+        interestScheduleRepository.save(interestSchedule);
     }
 
     public LoanInfoResponse findLoanById(Long id){
