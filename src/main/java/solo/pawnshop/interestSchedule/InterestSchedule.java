@@ -30,7 +30,8 @@ public class InterestSchedule {
 
     @Builder
     private InterestSchedule(LocalDate periodStart, LocalDate periodEnd,
-                             LocalDate dueDate, Long amountDue){
+                             LocalDate dueDate, Long amountDue, Loan loan){
+        this.loan = loan;
         this.periodStart = periodStart;
         this.periodEnd = periodEnd;
         this.dueDate = dueDate;
