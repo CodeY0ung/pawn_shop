@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class InterestSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long interestScheduleId;
 
     @ManyToMany
     @JoinColumn(name = "loan_id")
