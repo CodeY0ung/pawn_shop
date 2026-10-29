@@ -1,33 +1,44 @@
 package solo.pawnshop.customer.dto.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
+import solo.pawnshop.customer.embeddable.PayerAccount;
 
 import java.time.LocalDate;
 
 @Builder
 public record CreateCustomerRequest(
 
-        @NotBlank(message = "회원 이름은 필수입니다.")
+        @NotBlank
+        @Size(min = 1, max = 30)
         String name,
 
-        @NotBlank(message = "전화번호는 필수입니다.")
-        @Pattern(
-                regexp = "^01[016789]-?\\d{3,4}-?\\d{4}$",
-                message = "올바른 전화번호 형식이 아닙니다."
-        )
+        @NotBlank
+        @Pattern(regexp = "^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$")
         String phone,
 
-        @NotNull(message = "주소는 필수입니다.")
-        @Valid
-        AddressRequest address,
+        @NotNull
+        @PastOrPresent
+        LocalDate birthDate,
 
-        @NotNull(message = "생년월일은 필수입니다.")
-        @Past
-        LocalDate birthDate
+        @NotBlank
+        String zipCode,
+
+        @NotBlank
+        String roadAddress,
+
+        String detailAddress,
+
+        @NotBlank
+        String payerBank,
+
+        @NotBlank
+        String payerAccount,
+
+        @NotBlank
+        @Size(min = 1, max = 40)
+        String payerName
+
 ) {
 }
