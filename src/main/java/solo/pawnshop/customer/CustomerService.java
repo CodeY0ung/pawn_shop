@@ -8,6 +8,7 @@ import solo.pawnshop.customer.dto.request.CustomerSearchConditions;
 import solo.pawnshop.customer.dto.request.UpdateCustomerRequest;
 import solo.pawnshop.customer.dto.response.CustomerInfoResponse;
 import solo.pawnshop.customer.embeddable.Address;
+import solo.pawnshop.customer.embeddable.PayerAccount;
 import solo.pawnshop.customer.exception.CustomerNotFoundException;
 import solo.pawnshop.customer.exception.DuplicatedCustomerException;
 
@@ -30,16 +31,23 @@ public class CustomerService {
         validate(request.name(),normalizePhone,request.birthDate());
 
         Address address = Address.builder()
-                .zipCode(request.address().zipCode())
-                .roadAddress(request.address().roadAddress())
-                .detailAddress(request.address().detailAddress())
+                .zipCode(request.zipCode())
+                .roadAddress(request.roadAddress())
+                .detailAddress(request.detailAddress())
+                .build();
+
+        PayerAccount payerAccount = PayerAccount.builder()
+                .payerBank(request.payerBank())
+                .payerName(request.payerName())
+                .payerAccount(request.payerAccount())
                 .build();
 
         Customer customer = Customer.builder()
                 .name(request.name())
                 .phone(normalizePhone)
-                .address(address)
                 .birthDate(request.birthDate())
+                .address(address)
+                .payerAccount(payerAccount)
                 .build();
 
         customerRepository.save(customer);
