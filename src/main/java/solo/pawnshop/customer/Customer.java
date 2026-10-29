@@ -3,13 +3,13 @@ package solo.pawnshop.customer;
 import jakarta.persistence.*;
 import lombok.*;
 import solo.pawnshop.customer.embeddable.Address;
+import solo.pawnshop.customer.embeddable.PayerAccount;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 public class Customer {
     @Id
@@ -22,12 +22,14 @@ public class Customer {
     @Column(nullable = false)
     private String phone;
 
-    @Embedded
-    @Column(nullable = false)
-    private Address address;
-
     @Column(nullable = false)
     private LocalDate birthDate;
+
+    @Embedded
+    private Address address;
+
+    @Embedded
+    private PayerAccount payerAccount;
 
     @Column(nullable = false)
     private boolean deleted;
@@ -36,11 +38,12 @@ public class Customer {
 
     @Builder
     private Customer(String name, String phone,
-                     Address address, LocalDate birthDate) {
+                     Address address, PayerAccount payerAccount, LocalDate birthDate) {
         this.name = name;
         this.phone = phone;
-        this.address = address;
         this.birthDate = birthDate;
+        this.address = address;
+        this.payerAccount = payerAccount;
         this.deleted = false;
     }
 
@@ -50,11 +53,15 @@ public class Customer {
     public void changePhone(String phone){
         this.phone = phone;
     }
+    public void changeBirthDate(LocalDate birthDate){
+        this.birthDate = birthDate;
+    }
     public void changeAddress(Address address){
         this.address = address;
     }
-    public void changeBirthDate(LocalDate birthDate){
-        this.birthDate = birthDate;
+
+    public void changePayerAccount(PayerAccount payerAccount){
+        this.payerAccount = payerAccount;
     }
     public void delete(){
         this.deleted = true;
