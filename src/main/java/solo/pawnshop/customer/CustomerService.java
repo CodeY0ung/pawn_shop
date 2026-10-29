@@ -105,9 +105,9 @@ public class CustomerService {
         }
 
         Address address = Address.builder()
-                .zipCode(request.address().zipCode())
-                .roadAddress(request.address().roadAddress())
-                .detailAddress(request.address().detailAddress())
+                .zipCode(request.zipCode())
+                .roadAddress(request.roadAddress())
+                .detailAddress(request.detailAddress())
                 .build();
 
         customer.changeName(request.name());
