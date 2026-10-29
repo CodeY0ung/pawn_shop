@@ -7,7 +7,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import solo.pawnshop.customer.dto.request.AddressRequest;
 import solo.pawnshop.customer.dto.request.CreateCustomerRequest;
 import solo.pawnshop.customer.exception.DuplicatedCustomerException;
 
