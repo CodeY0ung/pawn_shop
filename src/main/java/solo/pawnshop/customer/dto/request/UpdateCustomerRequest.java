@@ -1,10 +1,7 @@
 package solo.pawnshop.customer.dto.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 
 import java.time.LocalDate;
@@ -21,12 +18,26 @@ public record UpdateCustomerRequest(
         )
         String phone,
 
-        @NotNull(message = "주소는 필수입니다.")
-        @Valid
-        AddressRequest address,
-
         @NotNull(message = "생년월일은 필수입니다.")
         @Past
-        LocalDate birthDate
+        LocalDate birthDate,
+
+        @NotBlank
+        String zipCode,
+
+        @NotBlank
+        String roadAddress,
+
+        String detailAddress,
+
+        @NotBlank
+        String payerBank,
+
+        @NotBlank
+        String payerAccount,
+
+        @NotBlank
+        @Size(min = 1, max = 40)
+        String payerName
 ) {
 }
