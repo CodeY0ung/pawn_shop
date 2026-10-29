@@ -23,7 +23,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
     @Transactional
-    public void createCustomer(CreateCustomerRequest request){
+    public CustomerInfoResponse createCustomer(CreateCustomerRequest request){
 
         String normalizePhone = normalizePhone(request.phone());
 
@@ -39,7 +39,7 @@ public class CustomerService {
         PayerAccount payerAccount = PayerAccount.builder()
                 .payerBank(request.payerBank())
                 .payerName(request.payerName())
-                .payerAccount(request.payerAccount())
+                .payerAccount(normalizeAccount(request.payerAccount()))
                 .build();
 
         Customer customer = Customer.builder()
@@ -50,7 +50,9 @@ public class CustomerService {
                 .payerAccount(payerAccount)
                 .build();
 
-        customerRepository.save(customer);
+        Customer saved = customerRepository.save(customer);
+
+        return CustomerInfoResponse.from(saved);
     }
 
     // 전체 회원 조회
@@ -142,8 +144,9 @@ public class CustomerService {
         return value.trim();
     }
 
-
-
+    private String normalizeAccount(String account) {
+        return account.replaceAll("[\\s-]", "");
+    }
 
     private void validate(String name, String phone, LocalDate birthDate){
         if(customerRepository.existByNameAndPhoneAndBirthDate(name, phone, birthDate)){

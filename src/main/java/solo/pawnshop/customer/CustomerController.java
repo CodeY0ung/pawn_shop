@@ -22,14 +22,14 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping()
-    public ResponseEntity<Void> createCustomer(
-            @RequestBody CreateCustomerRequest request){
+    public ResponseEntity<CustomerInfoResponse> createCustomer(
+            @Valid @RequestBody CreateCustomerRequest request){
 
-        customerService.createCustomer(request);
+        CustomerInfoResponse response = customerService.createCustomer(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .build();
+                .body(response);
     }
 
     @GetMapping()

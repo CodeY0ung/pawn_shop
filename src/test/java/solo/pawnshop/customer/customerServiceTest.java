@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import solo.pawnshop.customer.dto.request.CreateCustomerRequest;
+import solo.pawnshop.customer.embeddable.Address;
 import solo.pawnshop.customer.exception.DuplicatedCustomerException;
 
 import java.time.LocalDate;
@@ -31,19 +32,19 @@ public class customerServiceTest {
     @DisplayName("고객 정보 생성 가능")
     void createCustomer(){
         //given
-        AddressRequest addressRequest =
-                AddressRequest.builder()
-                        .zipCode("47193")
-                        .roadAddress("roadAddress")
-                        .detailAddress("detailAddress")
-                        .build();
+
 
         CreateCustomerRequest request =
                 CreateCustomerRequest.builder()
                         .name("customer")
                         .phone("010-1234-5678")
                         .birthDate(LocalDate.of(2000,06,11))
-                        .address(addressRequest)
+                        .zipCode("47193")
+                        .roadAddress("roadAddress")
+                        .detailAddress("detailAddress")
+                        .payerBank("test bank")
+                        .payerName("test name")
+                        .payerAccount("test account")
                         .build();
 
         when(customerRepository.existByNameAndPhoneAndBirthDate("customer","01012345678", request.birthDate()))
@@ -68,19 +69,19 @@ public class customerServiceTest {
     @DisplayName("이름,전화번호, 생년월일 중복 불가")
     void cannotDuplicatedNameAndPhoneAndBirthDate(){
         //given
-        AddressRequest addressRequest =
-                AddressRequest.builder()
-                        .zipCode("47193")
-                        .roadAddress("roadAddress")
-                        .detailAddress("detailAddress")
-                        .build();
+
 
         CreateCustomerRequest request =
                 CreateCustomerRequest.builder()
                         .name("customer")
                         .phone("010-1234-5678")
                         .birthDate(LocalDate.of(2000,06,11))
-                        .address(addressRequest)
+                        .zipCode("47193")
+                        .roadAddress("roadAddress")
+                        .detailAddress("detailAddress")
+                        .payerBank("test bank")
+                        .payerName("test name")
+                        .payerAccount("test account")
                         .build();
 
         when(customerRepository.existByNameAndPhoneAndBirthDate(request.name(),"01012345678",request.birthDate()))
