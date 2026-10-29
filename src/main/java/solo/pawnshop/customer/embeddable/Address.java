@@ -1,5 +1,6 @@
 package solo.pawnshop.customer.embeddable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
@@ -8,7 +9,9 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Address {
 
+    @Column(nullable = false)
     private String zipCode;
+    @Column(nullable = false)
     private String roadAddress;
     private String detailAddress;
 
